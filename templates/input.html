@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>New User Information</h2>
+
+<form action="/input" method="post">
+    <label>
+        Enter your new user name:
+        <input type="text" name="user_name"/>
+        <br>
+        Enter your email address:
+        <input type="text" name="email_address"/>
+        <br>
+        Enter your new password:
+        <input type="password" name="new_password"/>
+        <br>
+        Enter your new password again:
+        <input type="password" name="verify_password"/>
+    </label>
+    <br><br>
+    <input type="submit" value="Create New User ID"/>
+</form>
+
+
+{% endblock %}
