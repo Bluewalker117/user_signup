@@ -7,19 +7,25 @@ app = Flask(__name__)
 app.config['DEBUG'] = True  
 
 
-def valid_user_name(name):    
-    if 2 < len(name) < 21:
+def valid_length(text):    
+    if 2 < len(text) < 21:
         return True
     else:
         return False 
 
 # def valid_email_address(email):
 
-def valid_password(password):
-    if 2 < len(password) < 21:
-        return True
-    else:
-        return False 
+#def alphabet_numb(letter):
+#    for chara in letter:
+#        x = ord(chara)
+#        return(x)  
+
+#def is_space(letter):
+#    z = alphabet_numb(letter)
+#    if z == 32:
+#        return True
+#    else:
+#        return False
 
 def validate_password(password, password_2):
     if (password) == (password_2):
@@ -27,7 +33,8 @@ def validate_password(password, password_2):
     else:
         return False
 
-    
+
+
 
 @app.route("/input", methods=["POST"])
 def input():
@@ -35,26 +42,41 @@ def input():
     email = request.form["email_address"]
     p_word = request.form["new_password"]
     p_word_2 = request.form["verify_password"]
+    
+    user_error = ""
+    email_error = ""
+    p_word_error = ""
+    P_word_2_error = ""
+
+
 
     if user.strip()=="":
-        return render_template("input.html", user_name_error = "Please enter a user name.")
+        user_error = "No"
+        return render_template("input.html", email_address = email, user_name_error = "Please enter a user name.")
     else:
         user = user
-        if valid_user_name(user)== False:
-            return render_template("input.html", user_name = user, user_name_error = 
+        if valid_length(user)== False:
+            user_error = "No"
+            return render_template("input.html", user_name = user, email_address = email, user_name_error = 
         "The name you have entered is not the required 3-20 characters in length.  Please try a new name.")
 
-
     if p_word.strip()=="":
-        return render_template("input.html", new_password_error = "Please enter a password.")
-    if valid_user_name(user) == True:
-        return "Yes"
+        p_word_error = "No"
+        return render_template("input.html", user_name = user, email_address = email, new_password_error = 
+        "Please enter a password.")
     else:
-        return render_template("input.html", new_password = p_word, new_password_error = 
+        p_word = p_word
+        if valid_length(p_word)== False:
+            p_word_error = "No"
+            return render_template("input.html", user_name = user, email_address = email, new_password_error = 
         "The password you have entered is not the required 3-20 characters in length.  Please try a new password.")
+        
+        
+   # if p_word_2()=="":
+   #     return render_template("input.html", verify_password_error = "Please re-enter your password for verification.")
 
-    #else:
-     #   return render_template("welcome.html", user_name = user)
+    if not user_error and not p_word_error:
+        return render_template("welcome.html", user_name = user)
 
         
 

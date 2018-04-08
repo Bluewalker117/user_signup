@@ -12,8 +12,9 @@
         <br>
     <label>
         Enter your email address:
-        <input type="text" name="email_address"/>
+        <input type="text" name="email_address" value="{{email_address}}"/>
     </label>
+    <p class="error">{{email_address_error}}</p>
         <br>
     <label>
         Enter your new password, using 3-20 characters:
@@ -23,8 +24,9 @@
         <br>
     <label>
         Enter your new password again:
-        <input type="password" name="verify_password"/>
+        <input type="password" name="verify_password" value="{{verify_password}}"/>
     </label>
+    <p class="error">{{verify_password_error}}</p>
     <br><br>
     <input type="submit" value="Create New User ID"/>
 </form>
