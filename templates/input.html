@@ -6,9 +6,9 @@
 <form action="/input" method="post">
     <label>
         Enter your new user name, using 3-20 characters:
-        <input type="text" name="user_name"/>
+        <input type="text" name="user_name" value="{{user_name}}"/>
     </label>
-    <p class="error">{user_name_error}</p>
+    <p class="error">{{user_name_error}}</p>
         <br>
     <label>
         Enter your email address:
@@ -16,9 +16,10 @@
     </label>
         <br>
     <label>
-        Enter your new password:
-        <input type="password" name="new_password"/>
+        Enter your new password, using 3-20 characters:
+        <input type="password" name="new_password" value="{{new_password}}"/>
     </label>
+    <p class="error">{{new_password_error}}</p>
         <br>
     <label>
         Enter your new password again:

@@ -1,10 +1,6 @@
 from flask import Flask, request, redirect, render_template
 import cgi
 import os
-import jinja2
-
-template_dir = os.path.join(os.path.dirname(__file__), 'templates')
-jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=True)
 
 app = Flask(__name__)
 
@@ -17,31 +13,50 @@ def valid_user_name(name):
     else:
         return False 
 
-@app.route("/input", methods=["POST"])
-def test():
-    user = request.form["user_name"]
-    user_name_error = "Ooooops!"
-    if user.strip()=="":
-        return "Please enter a user name."
-    if valid_user_name(user) == True:
-        return "success"
+# def valid_email_address(email):
+
+def valid_password(password):
+    if 2 < len(password) < 21:
+        return True
     else:
-        return "The name you have entered is not the required 3-20 characters in length.  Please try a new name."
+        return False 
 
-#@app.route("/input", methods=["POST"])
-#def input():
-#    user= request.form["user_name"]
-#    if user.strip()=="":
-#        error="Please enter a user name."
-#        return redirect("/?error" + error)
+def validate_password(password, password_2):
+    if (password) == (password_2):
+        return True
+    else:
+        return False
+
+    
+
+@app.route("/input", methods=["POST"])
+def input():
+    user = request.form["user_name"]
+    email = request.form["email_address"]
+    p_word = request.form["new_password"]
+    p_word_2 = request.form["verify_password"]
+
+    if user.strip()=="":
+        return render_template("input.html", user_name_error = "Please enter a user name.")
+    else:
+        user = user
+        if valid_user_name(user)== False:
+            return render_template("input.html", user_name = user, user_name_error = 
+        "The name you have entered is not the required 3-20 characters in length.  Please try a new name.")
 
 
- #   template=jinja_env.get_template("confirm.html")
-  #  return template.render(user_name = user)
+    if p_word.strip()=="":
+        return render_template("input.html", new_password_error = "Please enter a password.")
+    if valid_user_name(user) == True:
+        return "Yes"
+    else:
+        return render_template("input.html", new_password = p_word, new_password_error = 
+        "The password you have entered is not the required 3-20 characters in length.  Please try a new password.")
 
-@app.route("/error", methods=["GET"])
-def error():
-    return "<p>Error.</p>"
+    #else:
+     #   return render_template("welcome.html", user_name = user)
+
+        
 
 
 
