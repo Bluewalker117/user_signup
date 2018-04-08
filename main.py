@@ -13,7 +13,17 @@ def valid_length(text):
     else:
         return False 
 
-# def valid_email_address(email):
+def valid_email_address(email):
+    a = email.count("@")
+    b = email.count(".")
+    
+    if 2 < len(email) < 21:
+        if a == 1 and b == 1:
+            return True
+        else:
+            return False
+    else:
+        return False
 
 #def alphabet_numb(letter):
 #    for chara in letter:
@@ -46,7 +56,7 @@ def input():
     user_error = ""
     email_error = ""
     p_word_error = ""
-    P_word_2_error = ""
+    p_word_2_error = ""
 
 
 
@@ -60,6 +70,17 @@ def input():
             return render_template("input.html", user_name = user, email_address = email, user_name_error = 
         "The name you have entered is not the required 3-20 characters in length.  Please try a new name.")
 
+    if email =="":
+        email_error = ""
+    else:
+        if valid_email_address(email)== False:
+            email_error="No"
+            return render_template("input.html", user_name = user, email_address = email, email_address_error = 
+        "You have entered an invalid email address.")
+        else:
+            email_error=""
+
+
     if p_word.strip()=="":
         p_word_error = "No"
         return render_template("input.html", user_name = user, email_address = email, new_password_error = 
@@ -70,12 +91,20 @@ def input():
             p_word_error = "No"
             return render_template("input.html", user_name = user, email_address = email, new_password_error = 
         "The password you have entered is not the required 3-20 characters in length.  Please try a new password.")
-        
-        
-   # if p_word_2()=="":
-   #     return render_template("input.html", verify_password_error = "Please re-enter your password for verification.")
 
-    if not user_error and not p_word_error:
+    if p_word_2.strip()=="":
+        p_word_2_error = "No"
+        return render_template("input.html", user_name = user, email_address = email, verify_password_error = 
+        "Please re-enter your password for verification.")
+    else:
+        p_word = p_word
+        p_word_2 = p_word_2
+        if validate_password(p_word, p_word_2)==False:
+            p_word_2_error = "No"
+            return render_template("input.html", user_name = user, email_address = email, verify_password_error =
+             "Your passwords did not match.")
+
+    if not user_error and not email_error and not p_word_error and not p_word_2_error:
         return render_template("welcome.html", user_name = user)
 
         
