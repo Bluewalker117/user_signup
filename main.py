@@ -25,17 +25,6 @@ def valid_email_address(email):
     else:
         return False
 
-#def alphabet_numb(letter):
-#    for chara in letter:
-#        x = ord(chara)
-#        return(x)  
-
-#def is_space(letter):
-#    z = alphabet_numb(letter)
-#    if z == 32:
-#        return True
-#    else:
-#        return False
 
 def validate_password(password, password_2):
     if (password) == (password_2):
@@ -58,11 +47,18 @@ def input():
     p_word_error = ""
     p_word_2_error = ""
 
+    u_space_c = user.count(" ")
+    p_space_c = p_word.count(" ")
+    e_space_c = email.count(" ")
 
 
     if user.strip()=="":
         user_error = "No"
         return render_template("input.html", email_address = email, user_name_error = "Please enter a user name.")
+    if u_space_c > 0:
+        user_error = "No"
+        return render_template("input.html", user_name = user, email_address = email, user_name_error = 
+        "You cannot have spaces in your user name.  Please try a new name.")
     else:
         user = user
         if valid_length(user)== False:
@@ -72,6 +68,10 @@ def input():
 
     if email =="":
         email_error = ""
+    if e_space_c > 0:
+        email_error = "No"
+        return render_template("input.html", user_name = user, email_address = email, email_address_error = 
+        "You have entered an invalid email address; spaces are not allowed.")
     else:
         if valid_email_address(email)== False:
             email_error="No"
@@ -80,11 +80,14 @@ def input():
         else:
             email_error=""
 
-
     if p_word.strip()=="":
         p_word_error = "No"
         return render_template("input.html", user_name = user, email_address = email, new_password_error = 
         "Please enter a password.")
+    if p_space_c > 0:
+        p_word_error = "No"
+        return render_template("input.html", user_name = user, email_address = email, new_password_error = 
+        "You cannot have spaces in your password. Please enter a password.")
     else:
         p_word = p_word
         if valid_length(p_word)== False:
