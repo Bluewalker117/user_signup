@@ -17,14 +17,13 @@ def valid_email_address(email):
     a = email.count("@")
     b = email.count(".")
     
-    if 2 < len(email) < 21:
-        if a == 1 and b == 1:
+    if len(email) == 0:
+        return True
+    else:
+        if 2 < len(email) < 21 and a == 1 and b == 1:
             return True
         else:
             return False
-    else:
-        return False
-
 
 def validate_password(password, password_2):
     if (password) == (password_2):
@@ -66,19 +65,17 @@ def input():
             return render_template("input.html", user_name = user, email_address = email, user_name_error = 
         "The name you have entered is not the required 3-20 characters in length.  Please try a new name.")
 
-    if email =="":
-        email_error = ""
     if e_space_c > 0:
         email_error = "No"
         return render_template("input.html", user_name = user, email_address = email, email_address_error = 
         "You have entered an invalid email address; spaces are not allowed.")
     else:
-        if valid_email_address(email)== False:
+        if valid_email_address(email)== True:
+            email_error=""
+        else:
             email_error="No"
             return render_template("input.html", user_name = user, email_address = email, email_address_error = 
-        "You have entered an invalid email address.")
-        else:
-            email_error=""
+            "You have entered an invalid email address.")
 
     if p_word.strip()=="":
         p_word_error = "No"
